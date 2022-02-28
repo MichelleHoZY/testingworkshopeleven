@@ -1,13 +1,50 @@
 package nus.iss.edu.sg.demo;
 
+import org.springframework.boot.DefaultApplicationArguments;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
+import java.util.List;
+import java.util.Collections;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 @SpringBootApplication
 public class WorkshopelevenApplication {
+	private static final Logger logger = LoggerFactory.getLogger(WorkshopelevenApplication.class);
+	private static final String DEFAULT_PORT_NUMBER = "3000";
 
-	public static void main(String[] args) {
-		SpringApplication.run(WorkshopelevenApplication.class, args);
+	public static void main (String[] args) {
+		String portNumber;
+
+		logger.info("Workshop 11");
+		logger.debug("Workshop 11 -- D");
+
+		SpringApplication app = new SpringApplication(WorkshopelevenApplication.class);
+
+		DefaultApplicationArguments appArgs = new DefaultApplicationArguments(args);
+		List optVals = appArgs.getOptionValues("port");
+
+		logger.info("optVals > " + optVals);
+		if (optVals == null || optVals.get(0) == null) {
+			portNumber = System.getenv("PORT");
+			if(portNumber == null){
+				portNumber = DEFAULT_PORT_NUMBER;
+			}
+		} else {
+			portNumber = (String)optVals.get(0);
+		}
+
+		if (portNumber != null) {
+			app.setDefaultProperties(Collections.singletonMap("server.port", portNumber));
+		}
+
+		app.run(args);
+
+
+
+		//SpringApplication.run(WorkshopelevenApplication.class, args);
 	}
 
 }
