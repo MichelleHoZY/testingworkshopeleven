@@ -24,7 +24,7 @@ public class WorkshopelevenApplication {
 		SpringApplication app = new SpringApplication(WorkshopelevenApplication.class);
 
 		DefaultApplicationArguments appArgs = new DefaultApplicationArguments(args);
-		List optVals = appArgs.getOptionValues("port");
+		List<String> optVals = appArgs.getOptionValues("port");
 
 		logger.info("optVals > " + optVals);
 		if (optVals == null || optVals.get(0) == null) {
